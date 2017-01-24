@@ -1,0 +1,16 @@
+{
+  "name": "word-up",
+  "version": "1.0.0",
+  "description": "An Alexa skill that presents example sentences for a given word.",
+  "main": "handler.js",
+   "dependencies": {
+    "axios": "^0.15.3",
+    "cheerio": "^0.22.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "raging fist",
+  "license": "ISC"
+}
