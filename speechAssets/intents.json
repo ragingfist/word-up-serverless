@@ -1,0 +1,17 @@
+{
+  "intents": [
+    {
+      "intent": "UseInSentenceIntent",
+      "slots": [
+        {
+          "name": "word",
+          "type": "ANY_WORD"
+        }
+      ]
+    },
+    { "intent": "AnotherExampleIntent" },
+    { "intent": "AMAZON.StopIntent" },
+    { "intent": "AMAZON.HelpIntent" },
+    { "intent": "AMAZON.CancelIntent" } 
+  ]
+}

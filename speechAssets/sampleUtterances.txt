@@ -1,0 +1,11 @@
+UseInSentenceIntent how do I use {word}
+UseInSentenceIntent use {word} in a sentence
+
+AnotherExampleIntent another one
+AnotherExampleIntent one more
+AnotherExampleIntent yes
+AnotherExampleIntent sure
+
+AMAZON.StopIntent no
+AMAZON.StopIntent nope
+AMAZON.StopIntent no thanks

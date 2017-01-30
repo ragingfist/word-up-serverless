@@ -11,7 +11,7 @@ module.exports = function(word) {
             $('.li_content').each(function() {
                 sentences.push($(this).text());
             });
-            console.log(sentences);
+            
             return sentences;
         });
 };

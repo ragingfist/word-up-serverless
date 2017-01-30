@@ -7,9 +7,9 @@
       "userId": "amzn1.ask.account.[unique-value-here]"
     },
     "application": {
-      "applicationId": "amzn1.ask.skill.[unique-value-here]"
+      "applicationId": "amzn1.ask.skill.5d5fb0b2-ba47-4fd2-80b9-9a42541a5a6b"
     }
-  },
+  },  
   "version": "1.0",
   "request": {
     "locale": "en-US",

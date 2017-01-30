@@ -18,18 +18,18 @@ const getSentencesFromWeb = require('./getSentence');
 function buildSpeechletResponse(title, output, repromptText, shouldEndSession) {
     return {
         outputSpeech: {
-            type: 'PlainText',
-            text: output,
+            type: 'SSML',
+            ssml: `<speak>${output}</speak>`,
         },
         card: {
             type: 'Simple',
-            title: `SessionSpeechlet - ${title}`,
-            content: `SessionSpeechlet - ${output}`,
+            title: title,
+            content: output,
         },
         reprompt: {
             outputSpeech: {
-                type: 'PlainText',
-                text: repromptText,
+                type: 'SSML',
+                ssml: `<speak>${repromptText}</speak>`,
             },
         },
         shouldEndSession,
@@ -51,19 +51,16 @@ function handleHelp(callback) {
     // If we wanted to initialize the session to have some attributes we could add those here.
     const sessionAttributes = {};
     const cardTitle = 'Word Up';
-    const speechOutput = "What's the word?";
-    // If the user either does not reply to the welcome message or says something that is not
-    // understood, they will be prompted again with this text.
-    const repromptText = "Say a word you want to use in a sentence by saying, use hello in a sentence.";
+    const helpMsg = "Ask me how to use a word in a sentence by saying: how do I use <break strength='medium'>apple</break>?";
     const shouldEndSession = false;
 
     callback(sessionAttributes,
-        buildSpeechletResponse(cardTitle, speechOutput, repromptText, shouldEndSession));
+        buildSpeechletResponse(cardTitle, helpMsg, helpMsg, shouldEndSession));
 }
 
 function handleStop(callback) {
-    const cardTitle = 'Session Ended';
-    const speechOutput = 'Thank you for using Word Up. We out!';
+    const cardTitle = 'We out!';
+    const speechOutput = 'Until next time. We out!';
     // Setting this to true ends the session and exits the skill.
     const shouldEndSession = true;
 
@@ -71,8 +68,6 @@ function handleStop(callback) {
 }
 
 function getSentences(word) {
-    // return axios.get(`https://www.vocabulary.com/dictionary/${word}`);
-    // return Promise.resolve([`I like to ${word}.`, `I think ${word} is cool.`, `We should ${word}.`]);
     return getSentencesFromWeb(word);
 }
 
@@ -81,9 +76,9 @@ function getSentences(word) {
  */
 function handleUseInSentenceIntent(intent, session, callback) {
     const wordSlot = intent.slots.word;
-    const reprompt = "What's the word?";
     const shouldEndSession = false;
-    const cardTitle = intent.name;
+    let cardTitle = '';
+    let reprompt = '';
     let speechOutput = '';
     let sessionAttributes = {};
     
@@ -96,21 +91,27 @@ function handleUseInSentenceIntent(intent, session, callback) {
                     word, 
                     sentences
                 };
-                speechOutput = `Here is an example usage for ${word}. ${sentences[0]}`;
+                speechOutput = `${sentences[0]} <break strength='strong'/> Another one?`;
+                reprompt = `Another example for ${word}?`;
+                cardTitle = `Example for ${word}`;
             } else {
                 speechOutput = `I couldn't find any examples for ${word}. Try another word.`;
+                reprompt = speechOutput;
+                cardTitle = `Got nuthin' for ya`;
             }
             callback(sessionAttributes,
                 buildSpeechletResponse(cardTitle, speechOutput, reprompt, shouldEndSession));        
         }).catch(function (error) {
-            speechOutput = `I'm having trouble find any examples for ${word}. Try another word.`;
+            speechOutput = `I'm having trouble finding any examples for ${word}. Try another word.`;
+            cardTitle = `Oh snap!`;
             callback(sessionAttributes,
-                buildSpeechletResponse(cardTitle, speechOutput, reprompt, shouldEndSession));    
+                buildSpeechletResponse(cardTitle, speechOutput, speechOutput, shouldEndSession));    
         });
     } else {
         speechOutput = "Say what? Tell me again.";
+        cardTitle = "Say what?";
         callback(sessionAttributes,
-            buildSpeechletResponse(cardTitle, speechOutput, reprompt, shouldEndSession));
+            buildSpeechletResponse(cardTitle, speechOutput, speechOutput, shouldEndSession));
     }
 }
 
@@ -120,6 +121,7 @@ function handleAnotherExampleIntent(intent, session, callback) {
     let shouldEndSession = false;
     let speechOutput = '';
     let reprompt = '';
+    let cardTitle = '';
 
     if (sessionAttributes) {
         word = sessionAttributes.word;
@@ -129,20 +131,22 @@ function handleAnotherExampleIntent(intent, session, callback) {
 
     if (sentences && sentences[index+1]) {
         let sentence = sentences[index+1];
-        speechOutput = `Here is another example usage for the word ${word}. ${sentence}.`;    
-        reprompt = 'Another one?';
+        speechOutput = `${sentence} <break strength="medium"/> Another one?`;    
+        reprompt = `Another example for ${word}?`;
+        cardTitle = `Another example for ${word}`;
         sessionAttributes.index++;
     } else {
-        speechOutput = "There are no more examples. Goodbye.";
-        reprompt = "What's the word?";
-        shouldEndSession = true;
+        speechOutput = `There are no more examples for ${word}. <break strength="strong"/> Try another word.`;
+        reprompt = speechOutput;
+        cardTitle = `Ain't got no more for ya`;
+
     }
 
     // Setting repromptText to null signifies that we do not want to reprompt the user.
     // If the user does not respond or says something that is not understood, the session
     // will end.
     callback(sessionAttributes,
-         buildSpeechletResponse(intent.name, speechOutput, reprompt, shouldEndSession));
+         buildSpeechletResponse(cardTitle, speechOutput, reprompt, shouldEndSession));
 }
 
 // --------------- Events -----------------------
@@ -209,11 +213,9 @@ module.exports.main = (event, context, callback) => {
          * Uncomment this if statement and populate with your skill's application ID to
          * prevent someone else from configuring a skill that sends requests to this function.
          */
-        /*
-        if (event.session.application.applicationId !== 'amzn1.echo-sdk-ams.app.[unique-value-here]') {
+        if (event.session.application.applicationId !== 'amzn1.ask.skill.5d5fb0b2-ba47-4fd2-80b9-9a42541a5a6b') {
              callback('Invalid Application ID');
         }
-        */
 
         if (event.session.new) {
             onSessionStarted({ requestId: event.request.requestId }, event.session);

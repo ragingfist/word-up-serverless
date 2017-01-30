@@ -1,0 +1,56 @@
+{
+  "session": {
+    "new": false,
+    "sessionId": "amzn1.echo-api.session.[unique-value-here]",
+    "attributes": {
+      "index": 0,
+      "word": "voluptuous",
+      "sentences": [
+            "The voluptuous brunette was pert and sophisticated.",
+            "Dressed in the seductive clothing of Hell, her body's gentle shape appeared voluptuous, her narrow shoulders exposed, her round hips and breasts enhanced.",
+            "Now that he'd tasted the fires that burned in her voluptuous body, no other woman could ever so satisfy him.",
+            "He was of a somewhat voluptuous and self-indulgent temperament, which shrark from danger and active exertion.",
+            "Through these, and through less perfect examples, was exhibited an amazing magnificence of fancy, at present insufficiently under control, and a voluptuous pomp of imagery, tending to an over-sweetness.",
+            "Beside or behind the voluptuous or intellectual attractions of beauty and culture, she had about her the fresher charm of a fearless and frank simplicity, a genuine and enduring pleasure in small and harmless things no less than in such as were neither.",
+            "In the Brahma-vaivarta, in which Krishna's amours in Nanda's cow-station are dwelt upon in fulsome and wearisome detail; whilst the poet Jayadeva, in the 12th century, made her love for the gay and inconstant boy the theme of his beautiful, if highly voluptuous, lyrical drama, Gita-govinda.",
+            "In the doctrine of this Vaishnava prophet, the adualistic theory of Sankara is resorted to as justifying a joyful and voluptuous cult of the deity.",
+            "But Pope excelled, not only in the voluptuous and in the didactic epistle, but in that of compliment as well, and there is no more graceful example of this in literature than is afforded by the letter about the poems of Parnell addressed, in 1721, to Robert, earl of Oxford.",
+            "I hardly ever failed, when I rambled through the village, to see a row of such worthies, either sitting on a ladder sunning themselves, with their bodies inclined forward and their eyes glancing along the line this way and that, from time to time, with a voluptuous expression, or else leaning against a barn with their hands in their pockets, like caryatides, as if to prop it up."
+      ]
+    },
+    "user": {
+      "userId": "amzn1.ask.account.[unique-value-here]"
+    },
+    "application": {
+      "applicationId": "amzn1.ask.skill.5d5fb0b2-ba47-4fd2-80b9-9a42541a5a6b"
+    }
+  },
+  "version": "1.0",
+  "request": {
+    "locale": "en-US",
+    "timestamp": "2016-10-27T21:06:28Z",
+    "type": "IntentRequest",
+    "requestId": "amzn1.echo-api.request.[unique-value-here]",
+    "intent": {
+      "name": "AnotherExampleIntent"
+    }
+  },
+  "context": {
+    "AudioPlayer": {
+      "playerActivity": "IDLE"
+    },
+    "System": {
+      "device": {
+        "supportedInterfaces": {
+          "AudioPlayer": {}
+        }
+      },
+      "application": {
+        "applicationId": "amzn1.ask.skill.[unique-value-here]"
+      },
+      "user": {
+        "userId": "amzn1.ask.account.[unique-value-here]"
+      }
+    }
+  }
+}
